@@ -35,7 +35,6 @@ public class InputCallbackSystem
     public InputCallbackSystem()
     {
         _inputSettings = new InputSettings();
-        Enable();
     }
 
     private void Click(InputAction.CallbackContext context)

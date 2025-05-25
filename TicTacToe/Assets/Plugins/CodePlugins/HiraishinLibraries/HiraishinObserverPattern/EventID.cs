@@ -4,5 +4,7 @@ using UnityEngine;
 
 public enum EventID
 {
+    ChangeMusicVolume,
+    ChangeSfxVolume,
     EndGame,
 }

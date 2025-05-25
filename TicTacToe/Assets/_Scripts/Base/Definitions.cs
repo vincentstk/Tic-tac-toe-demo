@@ -29,10 +29,21 @@ public enum MarkType : byte
     Leaf,
     Star
 }
+
+public enum MessageId : byte
+{
+    RequestOpponent,
+    StartMatch
+}
 #endregion
 
 #region Classes
 
+public static class ConstantDefinitions
+{
+    public const string MUSIC_VOLUME = "music_volume";
+    public const string SFX_VOLUME = "sfx_volume";
+}
 public static class Utilities
 {
     private static Vector3 BUTTON_CLICK_FEEDBACK_STRENGH = new Vector3(0.2f, 0.2f, 0.2f);
@@ -43,6 +54,15 @@ public static class Utilities
         return btn.transform.DOPunchScale(BUTTON_CLICK_FEEDBACK_STRENGH, BUTTON_CLICK_FEEDBACK_DURATION).OnComplete(() => callback?.Invoke());
     }
 
+}
+
+#endregion
+
+#region Observer Class Messages
+
+public class VolumeMessage
+{
+    public float volume { get; set; }
 }
 
 #endregion

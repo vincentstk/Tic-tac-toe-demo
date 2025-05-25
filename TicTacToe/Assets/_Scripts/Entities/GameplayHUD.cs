@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using Hiraishin.Utilities;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class GameplayHUD : BaseSingleton<GameplayHUD>
@@ -26,6 +28,8 @@ public class GameplayHUD : BaseSingleton<GameplayHUD>
     [SerializeField] private CanvasGroup cvsgrResult;
 
     [SerializeField] private TextMeshProUGUI txtResult;
+    [SerializeField] private TextMeshProUGUI txtname;
+    [SerializeField] private TextMeshProUGUI txtrank;
 
     #endregion
 
@@ -34,6 +38,12 @@ public class GameplayHUD : BaseSingleton<GameplayHUD>
         popup.alpha = isShow ? 1 : 0;
         popup.blocksRaycasts = isShow;
         popup.interactable = isShow;
+    }
+
+    private IEnumerator DelayGetBotData()
+    {
+        yield return new WaitForSeconds(2f);
+
     }
 
     public void ShowResult(bool isVictory)
@@ -48,13 +58,18 @@ public class GameplayHUD : BaseSingleton<GameplayHUD>
         txtResult.color = drawColor;
         ShowPopup(cvsgrResult, true);
     }
+
+    public void SetBotData()
+    {
+        txtname.SetText(Bot.Instance.BotName);
+        txtrank.SetText(Bot.Instance.BotLevel.ToString());
+    }
     
     #region UI Element Events
 
-    public void OnClickSetOpponentLevel(int level)
+    public void OnClickSetOpponentLevel()
     {
-        BotLevel botLevel =  (BotLevel)level;
-        GameController.Instance.SetBotLevel(botLevel);
+        GameController.Instance.SetBotLevel();
         ShowPopup(cvsgrSetOpponent, false);
     }
 

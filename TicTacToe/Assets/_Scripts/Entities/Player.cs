@@ -8,12 +8,14 @@ public class Player : BaseSingleton<Player>
     #region Defines
 
     private const string LEAF_TAG = "leaf";
+    private const string CLICK = "click";
 
     #endregion
     #region Component Configs
 
     [Inject] private ObjectPooling _poolerPrefab;
     private InputCallbackSystem _inputSystem;
+    private AudioSystem _audioSystem;
 
     private Camera mainCam;
     
@@ -31,13 +33,14 @@ public class Player : BaseSingleton<Player>
     protected override void OnAwake()
     {
         _inputSystem = new InputCallbackSystem();
+        _audioSystem = GetComponent<AudioSystem>();
         _inputSystem.OnClick += Choose;
         mainCam = Camera.main;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _inputSystem.State = SystemState.Enable;
+        _audioSystem.Init();
     }
 
     private void Choose(Vector2 mousePosition)
@@ -55,5 +58,6 @@ public class Player : BaseSingleton<Player>
         GameObject leafObj = _poolerPrefab.SpawnObject(LEAF_TAG, tile.transform.position, Quaternion.identity);
         Mark mark = leafObj.GetComponent<Mark>();
         tile.SetMark(mark);
+        _audioSystem.PlayAudio(CLICK);
     }
 }
